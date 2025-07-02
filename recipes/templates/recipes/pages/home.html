@@ -4,14 +4,8 @@
 
 {% block content %}
 <div class="main-content main-content-list container">
-    {% include "recipes/partials/recipe.html" %}
-    {% include "recipes/partials/recipe.html" %}
-    {% include "recipes/partials/recipe.html" %}
-    {% include "recipes/partials/recipe.html" %}
-    {% include "recipes/partials/recipe.html" %}
-    {% include "recipes/partials/recipe.html" %}
-    {% include "recipes/partials/recipe.html" %}
-    {% include "recipes/partials/recipe.html" %}
-    {% include "recipes/partials/recipe.html" %}
+    {% for recipe in recipes %}     {# mostrar recipe no navegador com base no recipe.html, que pega de recipes na views que pega de factory.py#}
+        {% include "recipes/partials/recipe.html" %}
+    {% endfor %}    
 </div>
 {% endblock content %}
