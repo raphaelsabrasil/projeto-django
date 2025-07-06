@@ -1,12 +1,14 @@
 <div class="recipe recipe-list-item">
     <div class="recipe-cover">
-        <a href="{% url 'recipes:recipe' recipe.id %}">
+        <!--criando link url na imagem-->
+        <a href="{% url 'recipes:recipe' recipe.id %}">     
             <img src="{{recipe.cover.url}}" alt="Temporário">
         </a>        
     </div>
     <div class="recipe-title-container">
         <h2 class="recipe-title">
-            <a href="{% url 'recipes:recipe' recipe.id %}">
+            <!--criando link url no título-->
+            <a href="{% url 'recipes:recipe' recipe.id %}">     
                 {{recipe.title}}
             </a>
         </h2>        
@@ -50,6 +52,7 @@
 
     {% if is_detail_page is not True %}
         <footer class="recipe-footer">
+            <!--criando link url no 'ver mais...'-->
             <a class="recipe-read-more button button-dark button-full-width" href="{% url 'recipes:recipe' recipe.id %}">       <!--usado para criar links, conhecido como âncora-->
                 <i class="fas fa-eye"></i>
                 <span>ver mais...</span>
