@@ -4,6 +4,8 @@ from django.http.response import Http404
 # from utils.recipes.factory import make_recipe
 # from django.http import Http404
 from django.db.models import Q      # >> usado para consultas complexas no django
+from django.core.paginator import Paginator
+from utils.pagination import make_pagination
 
 from recipes.models import Recipe
 
@@ -14,8 +16,24 @@ def home(request):  # noqa: E302
         is_published=True,
     ).order_by('-id')
 
+    # current_page = request.GET.get('page', 1)
+    # try:
+    #     current_page = int(request.GET.get('page', 1))
+    # except ValueError:
+    #     current_page = 1
+    # paginator = Paginator(recipes, 9)
+    # page_obj = paginator.get_page(current_page)
+
+    # pagination_range = make_pagination_range(
+    #     paginator.page_range,
+    #     4,
+    #     current_page,
+    # )
+    page_obj, pagination_range = make_pagination(request, recipes, 9)
+
     return render(request, 'recipes/pages/home.html', context={
-        'recipes': recipes,
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
     })
 
 
@@ -26,8 +44,13 @@ def category(request, category_id):
             is_published=True,
         ).order_by('-id')
     )
+
+    page_obj, pagination_range = make_pagination(request, recipes, 9)
+
     return render(request, 'recipes/pages/category.html', context={
-        'recipes': recipes,
+        # 'recipes': recipes,
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
         'title': f'{recipes[0].category.name} - Category | '
     })
 
@@ -43,6 +66,7 @@ def recipe(request, id):
         'recipe': recipe,
         'is_detail_page': True,
     })
+
 
 def search(request):
     search_term = request.GET.get('q', '').strip()  # strip >> função python para remover espaços
@@ -60,10 +84,15 @@ def search(request):
         is_published=True
     ).order_by('-id')
 
+    page_obj, pagination_range = make_pagination(request, recipes, 9)
+
     return render(request, 'recipes/pages/search.html', {
         'page_title': f'Search for "{search_term}" |',
         'search_term': search_term,
-        'recipes': recipes,
+        # 'recipes': recipes,
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
+        'additional_url_query': f'&q={search_term}',
     })
 
 
