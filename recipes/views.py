@@ -9,6 +9,11 @@ from utils.pagination import make_pagination
 
 from recipes.models import Recipe
 
+import os
+PER_PAGE = int(os.environ.get('PER_PAGE', 6))
+# print(PER_PAGE, type(PER_PAGE))
+
+
 # Create your views here.
 
 def home(request):  # noqa: E302
@@ -29,7 +34,7 @@ def home(request):  # noqa: E302
     #     4,
     #     current_page,
     # )
-    page_obj, pagination_range = make_pagination(request, recipes, 9)
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
 
     return render(request, 'recipes/pages/home.html', context={
         'recipes': page_obj,
@@ -45,7 +50,7 @@ def category(request, category_id):
         ).order_by('-id')
     )
 
-    page_obj, pagination_range = make_pagination(request, recipes, 9)
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
 
     return render(request, 'recipes/pages/category.html', context={
         # 'recipes': recipes,
@@ -84,7 +89,7 @@ def search(request):
         is_published=True
     ).order_by('-id')
 
-    page_obj, pagination_range = make_pagination(request, recipes, 9)
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
 
     return render(request, 'recipes/pages/search.html', {
         'page_title': f'Search for "{search_term}" |',
