@@ -1,10 +1,11 @@
 # from django.http import HttpResponse
-from django.shortcuts import get_list_or_404, get_object_or_404, render
-from django.http.response import Http404
 # from utils.recipes.factory import make_recipe
 # from django.http import Http404
+from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.http.response import Http404
 from django.db.models import Q      # >> usado para consultas complexas no django
 from django.core.paginator import Paginator
+# from django.contrib import messages
 from utils.pagination import make_pagination
 
 from recipes.models import Recipe
@@ -20,6 +21,10 @@ def home(request):  # noqa: E302
     recipes = Recipe.objects.filter(
         is_published=True,
     ).order_by('-id')
+
+    # messages.error(request, 'Epa, você foi pesquisar algo que eu vi.')
+    # messages.success(request, 'Epa, você foi pesquisar algo que eu vi.')
+    # messages.info(request, 'Epa, você foi pesquisar algo que eu vi.')
 
     # current_page = request.GET.get('page', 1)
     # try:

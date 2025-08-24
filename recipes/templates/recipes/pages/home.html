@@ -3,6 +3,9 @@
 {% block title %}Home | {% endblock title %}
 
 {% block content %}
+
+{% include "recipes/partials/messages.html" %}
+
 <div class="main-content main-content-list container">
 {% for recipe in recipes %}     {# mostrar recipe no navegador com base no recipe.html, que pega de recipes na views que pega de factory.py#}
     {% include "recipes/partials/recipe.html" %}
