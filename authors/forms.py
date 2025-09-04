@@ -41,7 +41,7 @@ class RegisterForm(forms.ModelForm):
         # widget=forms.PasswordInput(attrs={
         #     'placeholder': 'Your password'
         # }),
-        widget=forms.PasswordInput(),
+        widget=forms.PasswordInput(),        
         error_messages={
             'required': 'Password must not be empty'
         },
@@ -50,7 +50,8 @@ class RegisterForm(forms.ModelForm):
             'one lowercase letter and one number. The length should be '
             'at least 8 characters.'
         ),
-        validators=[strong_password]
+        validators=[strong_password],
+        label='Password'
     )
     password2 = forms.CharField(
         required=True,
@@ -58,6 +59,7 @@ class RegisterForm(forms.ModelForm):
         #     'placeholder': 'Repeat your password'
         # })
         widget=forms.PasswordInput(),
+        label='Password2'
     )
 
 
@@ -78,7 +80,7 @@ class RegisterForm(forms.ModelForm):
             'first_name': 'First name',
             'last_name': 'Last name',
             'email': 'E-mail',
-            'password': 'Password',
+            # 'password': 'Password',
         }
         help_texts = {
             'email': 'The e-mail must be valid.',
@@ -99,28 +101,28 @@ class RegisterForm(forms.ModelForm):
         #         'placeholder': 'Type your password here'
         #     })
         # }
+    # >>>>>>>>> clean_field
+    # def clean_password(self):
+    #     data = self.cleaned_data.get('password')
 
-    def clean_password(self):
-        data = self.cleaned_data.get('password')
+    #     if 'atenção' in data:
+    #         raise ValidationError(
+    #             'Não digite %(pipoca)s no campo password',
+    #             code='invalid',
+    #             params={'pipoca': '"atenção"'}
+    #         )
+    #     return data
+    # >>>>>>>>> clean_field
+    # def clean_first_name(self):
+    #     data = self.cleaned_data.get('first_name')
 
-        if 'atenção' in data:
-            raise ValidationError(
-                'Não digite %(pipoca)s no campo password',
-                code='invalid',
-                params={'pipoca': '"atenção"'}
-            )
-        return data
-    
-    def clean_first_name(self):
-        data = self.cleaned_data.get('first_name')
-
-        if 'John Doe' in data:
-            raise ValidationError(
-                'Não digite %(value)s no campo first name',
-                code='invalid',
-                params={'value': '"John Doe"'}
-            )
-        return data
+    #     if 'John Doe' in data:
+    #         raise ValidationError(
+    #             'Não digite %(value)s no campo first name',
+    #             code='invalid',
+    #             params={'value': '"John Doe"'}
+    #         )
+    #     return data
         
     def clean(self):
         cleaned_data = super().clean()
