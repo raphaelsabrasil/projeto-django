@@ -24,7 +24,6 @@ def strong_password(password):
         )
 
 
-
 class RegisterForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -166,8 +165,7 @@ class RegisterForm(forms.ModelForm):
                 'User e-mail is already in use',
                 code='invalid',
             )
-        return email
-    
+        return email    
         
     def clean(self):
         cleaned_data = super().clean()

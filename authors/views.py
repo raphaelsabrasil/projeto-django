@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib import messages
+from django.urls import reverse
 
 from .forms import RegisterForm
 
@@ -13,6 +14,7 @@ def register_view(request):     # para exibir os dados no formulário
     form = RegisterForm(register_form_data)
     return render(request, 'authors/pages/register_view.html', {
         'form': form,
+        'form_action': reverse('authors:create'),
     })
 
 def register_create(request):   # para tratar os dados
