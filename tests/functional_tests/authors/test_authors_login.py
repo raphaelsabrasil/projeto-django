@@ -7,7 +7,7 @@ from .base import AuthorsBaseTest
 
 @pytest.mark.functional_test
 class AuthorsLoginTest(AuthorsBaseTest):
-    def test_user_valid_data_can_login_succesfully(self):
+    def test_user_valid_data_can_login_successfully(self):
         string_password = 'pass'
         user = User.objects.create_user(
             username='my_user', password=string_password
