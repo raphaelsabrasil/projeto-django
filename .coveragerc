@@ -1,9 +1,11 @@
 [run]
 branch = True
-omit = venv/*,**/*test*.py,manage.py,__localcode/*
+omit = venv/*,**/*test*.py,manage.py,__localcode/*,utils/browser.py
 
 # pip install coverage
 # 'coverage run -m pytest'  >>> para rodar o teste no terminal
 # 'coverage run manage.py test'
 
 # 'coverage html' >>> para ver arquivo index no navegador, para saber quantos por centos foi testado da aplicação
+
+# 'coverage run manage.py test && coverage html'  >>> para executar os dois de uma vez
