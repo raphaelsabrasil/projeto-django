@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from recipes.models import Recipe
 
+from authors.forms.recipe_form import AuthorRecipeForm
 from .forms import LoginForm, RegisterForm
 
 # Create your views here.
@@ -99,6 +100,31 @@ def dashboard(request):
         'authors/pages/dashboard.html',
         context={
             'recipes': recipes,
+        }
+    )
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard_recipe_edit(request, id):
+    recipe = Recipe.objects.filter(         # no lugar de filter, poderia usar get, que não precisaria de first nem de http404, pois ele já levantaria um erro, caso precisasse.
+        is_published=False,
+        author=request.user,
+        pk=id,
+    ).first()
+
+    if not recipe:
+        raise Http404()
+    
+    form = AuthorRecipeForm(
+        data=request.POST or None,
+        instance=recipe             # instance requer apenas uma recipe, por isso usa .first() em filter, pois filter retorna uma queryset, que é uma lista de coisas, nesse caso, são várias recipes.
+    )
+    
+    return render(
+        request,
+        'authors/pages/dashboard_recipe.html',
+        context={
+            'form': form
         }
     )
 
