@@ -116,9 +116,23 @@ def dashboard_recipe_edit(request, id):
         raise Http404()
     
     form = AuthorRecipeForm(
-        data=request.POST or None,
+        data=request.POST or None,      # form pode receber dados de texto
+        files=request.FILES or None,    # form pode receber arquivos como mídias (o que consta no template form.html >> 'enctype')
         instance=recipe             # instance requer apenas uma recipe, por isso usa .first() em filter, pois filter retorna uma queryset, que é uma lista de coisas, nesse caso, são várias recipes.
     )
+
+    if form.is_valid():
+        # Agora, o form é válido e eu posso tentar salvar
+        recipe = form.save(commit=False)
+
+        recipe.author = request.user
+        recipe.preparation_step_is_html = False
+        recipe.is_published = False
+
+        recipe.save()
+
+        messages.success(request, 'Sua receita foi salva com sucesso!')
+        return redirect(reverse('authors:dashboard_recipe_edit', args=(id,)))
     
     return render(
         request,

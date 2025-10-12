@@ -1,5 +1,10 @@
 <div class="main-content container">
-    <form class="main-form" action="{{form_action}}" method="POST">
+    <form 
+        class="main-form" 
+        action="{{form_action}}" 
+        method="POST"
+        enctype="multipart/form-data"       
+    >   <!-- sempre que usar arquivos em form, colocar 'enctype', para informar que usará arquivos (mídias) além de texto -->
         {% csrf_token %}
 
         <div class="form-content form-content-grid">
@@ -14,6 +19,12 @@
 
                     {{field.errors}}
                 </div>
+
+                {% if field.name == 'cover' and field.value.url %}
+                    <div class="span2">
+                        <img src="{{field.value.url}}" alt="Capa para {{recipe.title}}">
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
 
