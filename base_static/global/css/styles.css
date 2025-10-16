@@ -363,8 +363,8 @@ a {
     color: var(--color-white);    
 }
 
-.inline_form {
-    display: inline,
+.inline-form {
+    display: inline;
 }
 
 .span-2 {

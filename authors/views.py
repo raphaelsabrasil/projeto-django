@@ -96,7 +96,7 @@ def dashboard(request):
         author=request.user
     )
     return render(
-        request, 
+        request,
         'authors/pages/dashboard.html',
         context={
             'recipes': recipes,
@@ -179,7 +179,7 @@ def dashboard_recipe_delete(request):
     
     POST = request.POST
     id = POST.get('id')
-    
+
     recipe = Recipe.objects.filter(
         is_published=False,
         author=request.user,
