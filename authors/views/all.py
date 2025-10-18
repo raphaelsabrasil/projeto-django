@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from recipes.models import Recipe
 
-from authors.forms.recipe_form import AuthorRecipeForm
+# from authors.forms.recipe_form import AuthorRecipeForm
 from authors.forms import LoginForm, RegisterForm
 
 # Create your views here.
@@ -104,73 +104,73 @@ def dashboard(request):
     )
 
 
-@login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_recipe_edit(request, id):
-    recipe = Recipe.objects.filter(         # no lugar de filter, poderia usar get, que não precisaria de first nem de http404, pois ele já levantaria um erro, caso precisasse.
-        is_published=False,
-        author=request.user,
-        pk=id,
-    ).first()
+# @login_required(login_url='authors:login', redirect_field_name='next')
+# def dashboard_recipe_edit(request, id):
+#     recipe = Recipe.objects.filter(         # no lugar de filter, poderia usar get, que não precisaria de first nem de http404, pois ele já levantaria um erro, caso precisasse.
+#         is_published=False,
+#         author=request.user,
+#         pk=id,
+#     ).first()
 
-    if not recipe:
-        raise Http404()
+#     if not recipe:
+#         raise Http404()
     
-    form = AuthorRecipeForm(
-        data=request.POST or None,      # form pode receber dados de texto
-        files=request.FILES or None,    # form pode receber arquivos como mídias (o que consta no template form.html >> 'enctype')
-        instance=recipe             # instance requer apenas uma recipe, por isso usa .first() em filter, pois filter retorna uma queryset, que é uma lista de coisas, nesse caso, são várias recipes.
-    )
+#     form = AuthorRecipeForm(
+#         data=request.POST or None,      # form pode receber dados de texto
+#         files=request.FILES or None,    # form pode receber arquivos como mídias (o que consta no template form.html >> 'enctype')
+#         instance=recipe             # instance requer apenas uma recipe, por isso usa .first() em filter, pois filter retorna uma queryset, que é uma lista de coisas, nesse caso, são várias recipes.
+#     )
 
-    if form.is_valid():
-        # Agora, o form é válido e eu posso tentar salvar
-        recipe = form.save(commit=False)
+#     if form.is_valid():
+#         # Agora, o form é válido e eu posso tentar salvar
+#         recipe = form.save(commit=False)
 
-        recipe.author = request.user
-        recipe.preparation_step_is_html = False
-        recipe.is_published = False
+#         recipe.author = request.user
+#         recipe.preparation_step_is_html = False
+#         recipe.is_published = False
 
-        recipe.save()
+#         recipe.save()
 
-        messages.success(request, 'Sua receita foi salva com sucesso!')
-        return redirect(reverse('authors:dashboard_recipe_edit', args=(id,)))
+#         messages.success(request, 'Sua receita foi salva com sucesso!')
+#         return redirect(reverse('authors:dashboard_recipe_edit', args=(id,)))
     
-    return render(
-        request,
-        'authors/pages/dashboard_recipe.html',
-        context={
-            'form': form
-        }
-    )
+#     return render(
+#         request,
+#         'authors/pages/dashboard_recipe.html',
+#         context={
+#             'form': form
+#         }
+#     )
 
-@login_required(login_url='authors:login', redirect_field_name='next')
-def dashboard_recipe_new(request):
-    form = AuthorRecipeForm(
-        data=request.POST or None,
-        files=request.FILES or None,
-    )
+# @login_required(login_url='authors:login', redirect_field_name='next')
+# def dashboard_recipe_new(request):
+#     form = AuthorRecipeForm(
+#         data=request.POST or None,
+#         files=request.FILES or None,
+#     )
 
-    if form.is_valid():
-        recipe: Recipe = form.save(commit=False)
+#     if form.is_valid():
+#         recipe: Recipe = form.save(commit=False)
 
-        recipe.author = request.user
-        recipe.preparation_steps_is_html = False
-        recipe.is_published = False
+#         recipe.author = request.user
+#         recipe.preparation_steps_is_html = False
+#         recipe.is_published = False
 
-        recipe.save()
+#         recipe.save()
 
-        messages.success(request, 'Salvo com sucesso!')
-        return redirect(
-            reverse('authors:dashboard_recipe_edit', args=(recipe.id,))
-        )
+#         messages.success(request, 'Salvo com sucesso!')
+#         return redirect(
+#             reverse('authors:dashboard_recipe_edit', args=(recipe.id,))
+#         )
     
-    return render(
-        request,
-        'authors/pages/dashboard_recipe.html',
-        context={
-            'form': form,
-            'form_action': reverse('authors:dashboard_recipe_new')
-        }
-    )
+#     return render(
+#         request,
+#         'authors/pages/dashboard_recipe.html',
+#         context={
+#             'form': form,
+#             'form_action': reverse('authors:dashboard_recipe_new')
+#         }
+#     )
 
 @login_required(login_url='authors:login', redirect_field_name='next')  # login_required >>> serve para não permitir que acessem as receitas sem esatar logado.
 def dashboard_recipe_delete(request):
