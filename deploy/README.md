@@ -46,7 +46,7 @@ sudo apt update -y
 sudo apt upgrade -y
 sudo apt autoremove -y
 sudo apt install build-essential -y
-sudo apt install python3.9 python3.9-venv python3.9-dev -y
+sudo apt install python3.13 python3.13-venv python3.13-dev -y
 sudo apt install nginx -y
 sudo apt install certbot python3-certbot-nginx -y
 sudo apt install postgresql postgresql-contrib -y
@@ -123,9 +123,8 @@ No seu computador local (no terminal do vscode), adicione o bare como remoto:
 
 ```
 git remote add app_bare rapha@34.44.25.81:~/app_bare
-ou
-git remote add app_bare cursodjangoserver:~/app_bare
-git push app_bare <branch>
+
+git push app_bare <branch>      <<< <main> >>>
 ```
 
 No servidor, em app_repo, faça pull:
@@ -151,6 +150,9 @@ pip install gunicorn
 ## Configurando o nginx
 
 Use o arquivo e as explicações disponibilizadas na aula.
+
+
+
 
 
 
