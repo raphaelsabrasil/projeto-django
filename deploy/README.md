@@ -160,4 +160,12 @@ Use o arquivo e as explicações disponibilizadas na aula.
 ### Caso queira apagar uma pasta para reiniciar todo o processo de criação:
 Exemplo apagando pasta app_repo:
 rm -R app_repo/
+
+
+Para ver os repositórios remotos existentes:
+git remote -v
+
+Para apagar repositório remoto:
+Exemplo apagando repositório app_bare:
+git remote rm app_bare
 ```
