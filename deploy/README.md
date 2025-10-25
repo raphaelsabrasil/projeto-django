@@ -141,11 +141,28 @@ git pull origin <branch>
 cd  ~/app_repo
 git pull origin <branch>
 python3.9 -m venv venv
-. venv/bin/activate
+. venv/bin/activate                 ### tem que ser 'bin' pois a instância no google cloud é Linux
 pip install -r requirements.txt
 pip install psycopg2
 pip install gunicorn
 ```
+
+
+```
+Depois verifique:
+python manage.py runserver
+python manage.py migrate            ### para fazer as migrações do model
+cp .env-example .env                ### caso 'manage.py migrate' apresente erro, então ainda precisa configurar a base de dados (copiar .env-exemple para .env)
+sudo apt-get install nano           ### caso não tenha 'nano' instalado
+nano .env                           ### para verificar se está tudo correto
+muda o SECRET_KEY e DESCOMENTA O POSTGRES (para que o servidor da cloud seja esse)
+dentro nano ainda (CTRL + X para sair Y para confirmar e ENTER para salvar e sair)
+python manage.py migrate            ### para fazer as migrações da base de dados para o Postgres
+rm db.sqlite3                       ### pode apagar sqlite, pois o que está sendo usado no google cloud é o Postgres
+python manage.py runserver          ### para subir a aplicação
+```
+
+
 
 ## Configurando o nginx
 
@@ -170,4 +187,9 @@ git remote -v
 Para apagar repositório remoto:
 Exemplo apagando repositório app_bare:
 git remote rm app_bare
+
+Para ver os arquivos dentro de uma pasta:
+ls
+
+
 ```
