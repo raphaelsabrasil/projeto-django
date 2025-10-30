@@ -81,6 +81,8 @@ server {
 }
 
 
+
+##################################################
 # sudo reboot  >>> para rebootar timezone
 # sudo nano /etc/nginx/sites-available/curso_django     >>> para incluir todo o código acima
 # pwd   >>> para ver o caminho da pasta
